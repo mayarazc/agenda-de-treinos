@@ -1,7 +1,8 @@
-import 'package:agendadetreinos/model/Exercicio.dart';
-import 'package:agendadetreinos/model/Treino.dart';
+import 'package:agendadetreinos/model/exercicio_model.dart';
+import 'package:agendadetreinos/model/treino_model.dart';
+import 'package:agendadetreinos/view/treino_tile.dart';
+import 'package:agendadetreinos/view/modal.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -12,18 +13,33 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final treinos = [
-    const Treino("Treino A", [Exercicio("Remada Cavalinho", "Costas", 4, 12)]),
+    const TreinoModel(
+        "Treino A", [ExercicioModel("Remada Cavalinho", "Costas", 4, 12)]),
+    const TreinoModel("Treino B", [
+      ExercicioModel("Pulo", "Rosca", 3, 8),
+      ExercicioModel("Caminhada", "Perna", 6, 7)
+    ]),
   ];
+
+  final controller = TextEditingController();
+
+  void salvarTreino(String nomeTreino) {
+    setState(() {
+      treinos.add(TreinoModel(nomeTreino, []));
+      controller.clear();
+    });
+    Navigator.of(context).pop();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: Colors.deepPurple,
       appBar: AppBar(
         title: const Text(
           'Agenda de Treinos',
           style: TextStyle(
-              color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
+              color: Colors.deepPurple, fontWeight: FontWeight.bold, fontSize: 16),
         ),
         backgroundColor: Colors.white,
         elevation: 0,
@@ -31,79 +47,24 @@ class _HomePageState extends State<HomePage> {
       body: ListView.builder(
         itemCount: treinos.length,
         itemBuilder: (context, index) {
-          return ListTile(
-                title: Text(treinos[index].nome),
-          );
+          return TreinoTile(
+              nome: treinos[index].nome,
+              lexercicios: treinos[index].exercicios);
         },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showModalBottomSheet(
-              context: context,
-              shape: const RoundedRectangleBorder(
-                  borderRadius:
-                      BorderRadius.vertical(top: Radius.circular(24))),
-              builder: (context) {
-                return Column(
-                  children: [
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    Container(
-                      width: 52,
-                      height: 10,
-                      decoration: BoxDecoration(
-                          color: Colors.grey[400],
-                          borderRadius: BorderRadius.circular(16)),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(30),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Text(
-                            "CRIAR TREINO",
-                            style: TextStyle(
-                              fontFamily: GoogleFonts.inter().fontFamily,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 16,
-                          ),
-                          TextFormField(
-                            decoration: const InputDecoration(
-                                labelText: "Digite um nome para o treino"),
-                          ),
-                          const SizedBox(
-                            height: 100,
-                          ),
-                          ElevatedButton(
-                              onPressed: () {},
-                              style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all<
-                                        Color>(
-                                    const Color.fromARGB(255, 207, 206, 206)),
-                                fixedSize: MaterialStateProperty.all<Size>(
-                                    const Size(40, 40)),
-                              ),
-                              child: const Text(
-                                "Criar",
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold),
-                              ))
-                        ],
-                      ),
-                    )
-                  ],
-                );
-              });
+            context: context,
+            builder: (BuildContext context) {
+              return Modal(
+                controller: controller,
+                salvar: (nomeTreino) {
+                  salvarTreino(controller.text);
+                },
+              );
+            },
+          );
         },
         backgroundColor: Colors.grey[200],
         child: const Icon(
