@@ -17,6 +17,8 @@ class _HomePageState extends State<HomePage> {
         "Treino A", [ExercicioModel("Remada Cavalinho", "Costas", 4, 12)]),
     const TreinoModel("Treino B", [
       ExercicioModel("Pulo", "Rosca", 3, 8),
+      ExercicioModel("Caminhada", "Perna", 6, 7),
+      ExercicioModel("Pulo", "Rosca", 3, 8),
       ExercicioModel("Caminhada", "Perna", 6, 7)
     ]),
   ];

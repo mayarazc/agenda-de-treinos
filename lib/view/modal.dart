@@ -57,7 +57,7 @@ class _ModalState extends State<Modal> {
                   ),
                 ),
                 const SizedBox(
-                  height: 100,
+                  height: 50,
                 ),
                 ElevatedButton(
                   onPressed: () {
