@@ -1,8 +1,12 @@
+// ignore_for_file: must_call_super
+
 import 'package:agendadetreinos/model/exercicio_model.dart';
 import 'package:agendadetreinos/model/treino_model.dart';
 import 'package:agendadetreinos/view/treino_tile.dart';
 import 'package:agendadetreinos/view/modal.dart';
+import 'package:agendadetreinos/dados/treinos_db.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -12,22 +16,32 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final treinos = [
-    const TreinoModel(
-        "Treino A", [ExercicioModel("Remada Cavalinho", "Costas", 4, 12)]),
-    const TreinoModel("Treino B", [
-      ExercicioModel("Pulo", "Rosca", 3, 8),
-      ExercicioModel("Caminhada", "Perna", 6, 7),
-      ExercicioModel("Pulo", "Rosca", 3, 8),
-      ExercicioModel("Caminhada", "Perna", 6, 7)
-    ]),
-  ];
+  final _treinos = Hive.box('treinos');
+
+  TreinosDB db = TreinosDB();
+
+  @override
+  void initState() {
+    if (_treinos.get('treinos') == null) {
+      db.criarBanco();
+    } else {
+      db.carregarDados();
+    }
+  }
 
   final controller = TextEditingController();
 
   void salvarTreino(String nomeTreino) {
     setState(() {
-      treinos.add(TreinoModel(nomeTreino, []));
+      db.treinos.add(TreinoModel(nomeTreino, []));
+      controller.clear();
+    });
+    Navigator.of(context).pop();
+  }
+
+  void adicionarExercicio(String nomeExercicio, musculo, series, repeticoes) {
+    setState(() {
+      db.exercicios.add(ExercicioModel(nomeExercicio, musculo, series, repeticoes));
       controller.clear();
     });
     Navigator.of(context).pop();
@@ -41,17 +55,21 @@ class _HomePageState extends State<HomePage> {
         title: const Text(
           'Agenda de Treinos',
           style: TextStyle(
-              color: Colors.deepPurple, fontWeight: FontWeight.bold, fontSize: 16),
+              color: Colors.deepPurple,
+              fontWeight: FontWeight.bold,
+              fontSize: 16),
         ),
         backgroundColor: Colors.white,
         elevation: 0,
       ),
       body: ListView.builder(
-        itemCount: treinos.length,
+        itemCount: db.treinos.length,
         itemBuilder: (context, index) {
           return TreinoTile(
-              nome: treinos[index].nome,
-              lexercicios: treinos[index].exercicios);
+              nome: db.treinos[index].nome,
+              lexercicios: db.treinos[index].exercicios,
+              salvarExercicio: null,
+              );
         },
       ),
       floatingActionButton: FloatingActionButton(
@@ -68,10 +86,10 @@ class _HomePageState extends State<HomePage> {
             },
           );
         },
-        backgroundColor: Colors.grey[200],
+        backgroundColor: Colors.deepPurple[200],
         child: const Icon(
           Icons.add,
-          color: Colors.black,
+          color: Colors.white,
         ),
       ),
     );

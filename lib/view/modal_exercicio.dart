@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class Modal extends StatefulWidget {
-  final TextEditingController controller;
+class ModalExercicio extends StatefulWidget {
+  final TextEditingController controllerNome;
+  final TextEditingController controllerMusculo;
+  final TextEditingController controllerSeries;
+  final TextEditingController controllerRepeticoes;
   final Function(String) salvar;
-  const Modal({super.key, required this.controller, required this.salvar});
+
+  const ModalExercicio({super.key, required this.controllerNome, required this.controllerMusculo, required this.controllerSeries, required this.controllerRepeticoes, required this.salvar});
 
   @override
-  State<Modal> createState() => _ModalState();
+  State<ModalExercicio> createState() => _ModalState();
 }
 
-class _ModalState extends State<Modal> {
+class _ModalState extends State<ModalExercicio> {
 
   @override
   Widget build(BuildContext context) {
@@ -51,9 +55,27 @@ class _ModalState extends State<Modal> {
                   height: 16,
                 ),
                 TextFormField(
-                  controller: widget.controller,
+                  controller: widget.controllerNome,
                   decoration: const InputDecoration(
-                    labelText: "Digite um nome para o treino",
+                    labelText: "Digite o nome do exercício",
+                  ),
+                ),
+                TextFormField(
+                  controller: widget.controllerMusculo,
+                  decoration: const InputDecoration(
+                    labelText: "Digite o músculo trabalhado",
+                  ),
+                ),
+                TextFormField(
+                  controller: widget.controllerSeries,
+                  decoration: const InputDecoration(
+                    labelText: "Digite o número de séries",
+                  ),
+                ),
+                TextFormField(
+                  controller: widget.controllerRepeticoes,
+                  decoration: const InputDecoration(
+                    labelText: "Digite o músculo de repetições",
                   ),
                 ),
                 const SizedBox(
@@ -61,7 +83,10 @@ class _ModalState extends State<Modal> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    widget.salvar(widget.controller.text);
+                    widget.salvar(widget.controllerNome.text);
+                    widget.salvar(widget.controllerMusculo.text);
+                    widget.salvar(widget.controllerSeries.text);
+                    widget.salvar(widget.controllerRepeticoes.text);
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(

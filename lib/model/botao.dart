@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class Botao extends StatelessWidget {
   final String texto;
   VoidCallback onPressed;
