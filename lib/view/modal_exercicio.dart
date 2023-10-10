@@ -1,3 +1,4 @@
+import 'package:agendadetreinos/model/exercicio_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -6,19 +7,24 @@ class ModalExercicio extends StatefulWidget {
   final TextEditingController controllerMusculo;
   final TextEditingController controllerSeries;
   final TextEditingController controllerRepeticoes;
-  final Function(String) salvar;
+  final Function salvar;
 
-  const ModalExercicio({super.key, required this.controllerNome, required this.controllerMusculo, required this.controllerSeries, required this.controllerRepeticoes, required this.salvar});
+  const ModalExercicio(
+      {super.key,
+      required this.controllerNome,
+      required this.controllerMusculo,
+      required this.controllerSeries,
+      required this.controllerRepeticoes,
+      required this.salvar});
 
   @override
   State<ModalExercicio> createState() => _ModalState();
 }
 
 class _ModalState extends State<ModalExercicio> {
-
   @override
   Widget build(BuildContext context) {
-    return Dialog( 
+    return Dialog(
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
@@ -27,14 +33,7 @@ class _ModalState extends State<ModalExercicio> {
           const SizedBox(
             height: 12,
           ),
-          Container(
-            width: 52,
-            height: 10,
-            decoration: BoxDecoration(
-              color: Colors.grey[400],
-              borderRadius: BorderRadius.circular(16),
-            ),
-          ),
+
           const SizedBox(
             height: 20,
           ),
@@ -46,7 +45,7 @@ class _ModalState extends State<ModalExercicio> {
                 Text(
                   "CRIAR TREINO",
                   style: TextStyle(
-                    fontFamily: GoogleFonts.inter().fontFamily, 
+                    fontFamily: GoogleFonts.inter().fontFamily,
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
                   ),
@@ -83,10 +82,11 @@ class _ModalState extends State<ModalExercicio> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    widget.salvar(widget.controllerNome.text);
-                    widget.salvar(widget.controllerMusculo.text);
-                    widget.salvar(widget.controllerSeries.text);
-                    widget.salvar(widget.controllerRepeticoes.text);
+                    int series = int.parse(widget.controllerSeries.text);
+                    int repeticoes =
+                        int.parse(widget.controllerRepeticoes.text);
+                    widget.salvar(ExercicioModel(widget.controllerNome.text,
+                        widget.controllerMusculo.text, series, repeticoes));
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(

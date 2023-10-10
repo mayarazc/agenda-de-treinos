@@ -1,4 +1,4 @@
-import 'package:agendadetreinos/model/botao.dart';
+//import 'package:agendadetreinos/model/botao.dart';
 import 'package:agendadetreinos/model/exercicio_model.dart';
 import 'package:agendadetreinos/view/exercicio_tile.dart';
 import 'package:agendadetreinos/view/modal_exercicio.dart';
@@ -8,13 +8,21 @@ import 'package:flutter/material.dart';
 class TreinoTile extends StatelessWidget {
   final String nome;
   final List<ExercicioModel> lexercicios;
-  Function(BuildContext?)? salvarExercicio;
+  final Function salvarExercicio;
+  final TextEditingController nomeExercicioController;
+  final TextEditingController musculoController;
+  final TextEditingController seriesController;
+  final TextEditingController repeticoesController;
 
-  TreinoTile(
+  const TreinoTile(
       {super.key,
       required this.nome,
       required this.lexercicios,
-      required this.salvarExercicio});
+      required this.salvarExercicio,
+      required this.musculoController,
+      required this.nomeExercicioController,
+      required this.repeticoesController,
+      required this.seriesController});
 
   @override
   Widget build(BuildContext context) {
@@ -40,18 +48,18 @@ class TreinoTile extends StatelessWidget {
               ),
             ),
             ExercicioTile(lexercicios: lexercicios),
-            Botao(
-              texto: 'Adicionar exercício',
+            ElevatedButton(
+              child: const Text('Adicionar exercício'),
               onPressed: () {
-                showModalBottomSheet(
+                showDialog(
                   context: context,
                   builder: (BuildContext context) {
                     return ModalExercicio(
-                      controllerNome: naoseimeajuda,
-                      controllerMusculo: helphenrique,
-                      controllerSeries: facaalgopf,
-                      controllerRepeticoes: naofunciona,
-                      salvar: ajudaa,
+                      controllerNome: nomeExercicioController,
+                      controllerMusculo: musculoController,
+                      controllerSeries: seriesController,
+                      controllerRepeticoes: repeticoesController,
+                      salvar: salvarExercicio,
                     );
                   },
                 );

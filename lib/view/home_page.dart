@@ -39,10 +39,18 @@ class _HomePageState extends State<HomePage> {
     Navigator.of(context).pop();
   }
 
-  void adicionarExercicio(String nomeExercicio, musculo, series, repeticoes) {
+  final nomeExercicioController = TextEditingController();
+  final musculoController = TextEditingController();
+  final seriesController = TextEditingController();
+  final repeticoesController = TextEditingController();
+
+  void adicionarExercicio(ExercicioModel exercicio) {
     setState(() {
-      db.exercicios.add(ExercicioModel(nomeExercicio, musculo, series, repeticoes));
-      controller.clear();
+      db.exercicios.add(exercicio);
+      nomeExercicioController.clear();
+      musculoController.clear();
+      seriesController.clear();
+      repeticoesController.clear();
     });
     Navigator.of(context).pop();
   }
@@ -66,10 +74,14 @@ class _HomePageState extends State<HomePage> {
         itemCount: db.treinos.length,
         itemBuilder: (context, index) {
           return TreinoTile(
-              nome: db.treinos[index].nome,
-              lexercicios: db.treinos[index].exercicios,
-              salvarExercicio: null,
-              );
+            nome: db.treinos[index].nome,
+            lexercicios: db.treinos[index].exercicios,
+            nomeExercicioController: nomeExercicioController,
+            musculoController: musculoController,
+            seriesController: seriesController,
+            repeticoesController: repeticoesController,
+            salvarExercicio: adicionarExercicio,
+          );
         },
       ),
       floatingActionButton: FloatingActionButton(
