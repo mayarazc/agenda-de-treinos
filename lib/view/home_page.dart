@@ -24,8 +24,10 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     if (_treinos.get('treinos') == null) {
       db.criarBanco();
+      print("/n/n/nAQUI passou 1");
     } else {
       db.carregarDados();
+      print("/n/n/nAQUI passou 3");
     }
   }
 
@@ -44,9 +46,16 @@ class _HomePageState extends State<HomePage> {
   final seriesController = TextEditingController();
   final repeticoesController = TextEditingController();
 
-  void adicionarExercicio(ExercicioModel exercicio) {
+  void adicionarExercicio(TreinoModel t) {
+    ExercicioModel m = ExercicioModel(
+      nomeExercicioController.text, 
+      musculoController.text, 
+      int.parse(seriesController.text), 
+      int.parse(repeticoesController.text)
+    );
+
     setState(() {
-      db.exercicios.add(exercicio);
+      db.adicionarExercicio(t, m);
       nomeExercicioController.clear();
       musculoController.clear();
       seriesController.clear();
@@ -74,14 +83,13 @@ class _HomePageState extends State<HomePage> {
         itemCount: db.treinos.length,
         itemBuilder: (context, index) {
           return TreinoTile(
-            nome: db.treinos[index].nome,
-            lexercicios: db.treinos[index].exercicios,
-            nomeExercicioController: nomeExercicioController,
-            musculoController: musculoController,
-            seriesController: seriesController,
-            repeticoesController: repeticoesController,
-            salvarExercicio: adicionarExercicio,
-          );
+              treino: db.treinos[index],
+              nomeExercicioController: nomeExercicioController,
+              musculoController: musculoController,
+              seriesController: seriesController,
+              repeticoesController: repeticoesController,
+              salvarExercicio: (context) => adicionarExercicio(db.treinos[index]),
+            );
         },
       ),
       floatingActionButton: FloatingActionButton(

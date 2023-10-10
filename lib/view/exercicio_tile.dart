@@ -1,9 +1,10 @@
 import 'package:agendadetreinos/model/exercicio_model.dart';
+import 'package:agendadetreinos/model/treino_model.dart';
 import 'package:flutter/material.dart';
 
 class ExercicioTile extends StatelessWidget {
-  final List<ExercicioModel> lexercicios;
-  const ExercicioTile({super.key, required this.lexercicios});
+  final TreinoModel treino;
+  const ExercicioTile({super.key, required this.treino});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,7 @@ class ExercicioTile extends StatelessWidget {
         direction: Axis.horizontal,
         alignment: WrapAlignment.center,
         children: List.generate(
-          lexercicios.length,
+          treino.exercicios.length,
           (index) => SizedBox(
             width: MediaQuery.of(context).size.width / 2 - 20,
             child: Column(
@@ -23,20 +24,20 @@ class ExercicioTile extends StatelessWidget {
               children: [
                 Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text('Exercício: ${lexercicios[index].nome}')),
+                    child: Text('Exercício: ${treino.exercicios[index].nome}')),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text('Músculo: ${lexercicios[index].musculo}'),
+                  child: Text('Músculo: ${treino.exercicios[index].musculo}'),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child:
-                      Text('Séries: ${lexercicios[index].series.toString()}'), 
+                      Text('Séries: ${treino.exercicios[index].series.toString()}'), 
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                      'Repetições: ${lexercicios[index].repeticoes.toString()}'),
+                      'Repetições: ${treino.exercicios[index].repeticoes.toString()}'),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(10),
@@ -51,9 +52,12 @@ class ExercicioTile extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                         ),
-                        child: const Icon(
-                          Icons.delete,
-                          size: 15,
+                        child: IconButton(
+                          icon: const Icon(Icons.delete),
+                          onPressed: () {
+                            treino.exercicios.removeAt(index);
+                          },
+                          iconSize: 15,
                         ),
                       ),
                       const SizedBox(
@@ -67,9 +71,12 @@ class ExercicioTile extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                         ),
-                        child: const Icon(
-                          Icons.edit,
-                          size: 15,
+                        child: IconButton(
+                          icon: const Icon(Icons.edit),
+                          onPressed: () {
+                            print("ola");
+                          },
+                          iconSize: 15,
                         ),
                       ),
                       const SizedBox(

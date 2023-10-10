@@ -1,14 +1,16 @@
 //import 'package:agendadetreinos/model/botao.dart';
 import 'package:agendadetreinos/model/exercicio_model.dart';
+import 'package:agendadetreinos/model/treino_model.dart';
 import 'package:agendadetreinos/view/exercicio_tile.dart';
 import 'package:agendadetreinos/view/modal_exercicio.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class TreinoTile extends StatelessWidget {
-  final String nome;
-  final List<ExercicioModel> lexercicios;
+  final TreinoModel treino;
+  //final List<ExercicioModel> lexercicios;
   final Function salvarExercicio;
+  //final Function excluirExercicio;
   final TextEditingController nomeExercicioController;
   final TextEditingController musculoController;
   final TextEditingController seriesController;
@@ -16,9 +18,10 @@ class TreinoTile extends StatelessWidget {
 
   const TreinoTile(
       {super.key,
-      required this.nome,
-      required this.lexercicios,
+      required this.treino,
+      //required this.lexercicios,
       required this.salvarExercicio,
+      //required this.excluirExercicio,
       required this.musculoController,
       required this.nomeExercicioController,
       required this.repeticoesController,
@@ -39,7 +42,7 @@ class TreinoTile extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                nome.toUpperCase(),
+                treino.nome.toUpperCase(),
                 style: const TextStyle(
                   color: Colors.deepPurple,
                   fontSize: 15,
@@ -47,23 +50,28 @@ class TreinoTile extends StatelessWidget {
                 ),
               ),
             ),
-            ExercicioTile(lexercicios: lexercicios),
-            ElevatedButton(
-              child: const Text('Adicionar exercício'),
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return ModalExercicio(
-                      controllerNome: nomeExercicioController,
-                      controllerMusculo: musculoController,
-                      controllerSeries: seriesController,
-                      controllerRepeticoes: repeticoesController,
-                      salvar: salvarExercicio,
-                    );
-                  },
-                );
-              },
+            ExercicioTile(treino: treino),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton(
+                style:
+                    ElevatedButton.styleFrom(backgroundColor: Colors.deepPurple),
+                child: const Text('Adicionar exercício'),
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return ModalExercicio(
+                        controllerNome: nomeExercicioController,
+                        controllerMusculo: musculoController,
+                        controllerSeries: seriesController,
+                        controllerRepeticoes: repeticoesController,
+                        salvar: salvarExercicio,
+                      );
+                    },
+                  );
+                },
+              ),
             )
           ],
         ));

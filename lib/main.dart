@@ -6,7 +6,6 @@ import 'package:google_fonts/google_fonts.dart';
 void main() async{
   await Hive.initFlutter();
   await Hive.openBox('treinos');
-  await Hive.openBox('exercicios');
   runApp(const MyApp());
 }
 

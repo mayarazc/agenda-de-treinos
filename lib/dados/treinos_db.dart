@@ -4,21 +4,19 @@ import 'package:agendadetreinos/model/treino_model.dart';
 
 class TreinosDB {
   final _treinos = Hive.box('treinos');
-  final _exercicios = Hive.box('exercicios');
 
   List<TreinoModel> treinos = [];
-  List<ExercicioModel> exercicios = [];
 
   void criarBanco() {
-    exercicios = [];
 
     treinos = [
-      TreinoModel("Treino A", exercicios),
+      TreinoModel("Treino A", []),
     ];
   }
 
   void carregarDados() {
     treinos = _treinos.get('treinos');
+    print("/n/n/nAQUI passou 2");
   }
 
   void adicionarTreino(TreinoModel treino) {
@@ -30,12 +28,15 @@ class TreinosDB {
     _treinos.put('treinos', treinos);
   }
 
-  void adicionarExercicio(ExercicioModel exercicio) {
-    exercicios.add(exercicio);
-    atualizarExercicios();
+  void adicionarExercicio(TreinoModel t, ExercicioModel exercicio) {
+    int idx = treinos.indexOf(t);
+    treinos[idx].exercicios.add(exercicio);
+    atualizarTreinos();
   }
 
-  void atualizarExercicios(){
-    _exercicios.put('exercicios', exercicios);
+  void excluirExercicio(TreinoModel t, ExercicioModel exercicio) {
+    int idx = treinos.indexOf(t);
+     treinos[idx].exercicios.remove(exercicio);
+    atualizarTreinos();
   }
 }
