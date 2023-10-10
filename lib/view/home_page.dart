@@ -48,11 +48,10 @@ class _HomePageState extends State<HomePage> {
 
   void adicionarExercicio(TreinoModel t) {
     ExercicioModel m = ExercicioModel(
-      nomeExercicioController.text, 
-      musculoController.text, 
-      int.parse(seriesController.text), 
-      int.parse(repeticoesController.text)
-    );
+        nomeExercicioController.text,
+        musculoController.text,
+        int.parse(seriesController.text),
+        int.parse(repeticoesController.text));
 
     setState(() {
       db.adicionarExercicio(t, m);
@@ -62,6 +61,12 @@ class _HomePageState extends State<HomePage> {
       repeticoesController.clear();
     });
     Navigator.of(context).pop();
+  }
+
+  void removerExercicio(TreinoModel t, ExercicioModel exercicio) {
+    setState(() {
+      db.excluirExercicio(t, exercicio);
+    });
   }
 
   @override
@@ -83,13 +88,14 @@ class _HomePageState extends State<HomePage> {
         itemCount: db.treinos.length,
         itemBuilder: (context, index) {
           return TreinoTile(
-              treino: db.treinos[index],
-              nomeExercicioController: nomeExercicioController,
-              musculoController: musculoController,
-              seriesController: seriesController,
-              repeticoesController: repeticoesController,
-              salvarExercicio: (context) => adicionarExercicio(db.treinos[index]),
-            );
+            treino: db.treinos[index],
+            nomeExercicioController: nomeExercicioController,
+            musculoController: musculoController,
+            seriesController: seriesController,
+            repeticoesController: repeticoesController,
+            salvarExercicio: (context) => adicionarExercicio(db.treinos[index]),
+            removerExercicio: removerExercicio,
+          );
         },
       ),
       floatingActionButton: FloatingActionButton(

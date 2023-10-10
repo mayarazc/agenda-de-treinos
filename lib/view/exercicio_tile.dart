@@ -1,10 +1,12 @@
+// ignore: unused_import
 import 'package:agendadetreinos/model/exercicio_model.dart';
 import 'package:agendadetreinos/model/treino_model.dart';
 import 'package:flutter/material.dart';
 
 class ExercicioTile extends StatelessWidget {
   final TreinoModel treino;
-  const ExercicioTile({super.key, required this.treino});
+  final Function removerExercicio;
+  const ExercicioTile({super.key, required this.treino, required this.removerExercicio});
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +33,8 @@ class ExercicioTile extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child:
-                      Text('Séries: ${treino.exercicios[index].series.toString()}'), 
+                  child: Text(
+                      'Séries: ${treino.exercicios[index].series.toString()}'),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -55,7 +57,7 @@ class ExercicioTile extends StatelessWidget {
                         child: IconButton(
                           icon: const Icon(Icons.delete),
                           onPressed: () {
-                            treino.exercicios.removeAt(index);
+                            removerExercicio(treino, treino.exercicios[index]);
                           },
                           iconSize: 15,
                         ),

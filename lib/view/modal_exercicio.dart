@@ -33,7 +33,6 @@ class _ModalState extends State<ModalExercicio> {
           const SizedBox(
             height: 12,
           ),
-
           const SizedBox(
             height: 20,
           ),

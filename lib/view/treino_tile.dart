@@ -1,4 +1,5 @@
 //import 'package:agendadetreinos/model/botao.dart';
+// ignore: unused_import
 import 'package:agendadetreinos/model/exercicio_model.dart';
 import 'package:agendadetreinos/model/treino_model.dart';
 import 'package:agendadetreinos/view/exercicio_tile.dart';
@@ -10,7 +11,7 @@ class TreinoTile extends StatelessWidget {
   final TreinoModel treino;
   //final List<ExercicioModel> lexercicios;
   final Function salvarExercicio;
-  //final Function excluirExercicio;
+  final Function removerExercicio;
   final TextEditingController nomeExercicioController;
   final TextEditingController musculoController;
   final TextEditingController seriesController;
@@ -21,7 +22,7 @@ class TreinoTile extends StatelessWidget {
       required this.treino,
       //required this.lexercicios,
       required this.salvarExercicio,
-      //required this.excluirExercicio,
+      required this.removerExercicio,
       required this.musculoController,
       required this.nomeExercicioController,
       required this.repeticoesController,
@@ -50,12 +51,12 @@ class TreinoTile extends StatelessWidget {
                 ),
               ),
             ),
-            ExercicioTile(treino: treino),
+            ExercicioTile(treino: treino, removerExercicio: removerExercicio),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(
-                style:
-                    ElevatedButton.styleFrom(backgroundColor: Colors.deepPurple),
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.deepPurple),
                 child: const Text('Adicionar exercício'),
                 onPressed: () {
                   showDialog(

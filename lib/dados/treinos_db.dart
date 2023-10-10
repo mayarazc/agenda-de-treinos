@@ -8,7 +8,6 @@ class TreinosDB {
   List<TreinoModel> treinos = [];
 
   void criarBanco() {
-
     treinos = [
       TreinoModel("Treino A", []),
     ];
@@ -36,7 +35,7 @@ class TreinosDB {
 
   void excluirExercicio(TreinoModel t, ExercicioModel exercicio) {
     int idx = treinos.indexOf(t);
-     treinos[idx].exercicios.remove(exercicio);
+    treinos[idx].exercicios.remove(exercicio);
     atualizarTreinos();
   }
 }
