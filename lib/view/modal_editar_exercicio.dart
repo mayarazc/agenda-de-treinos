@@ -1,4 +1,5 @@
 import 'package:agendadetreinos/model/exercicio_model.dart';
+import 'package:agendadetreinos/model/treino_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -8,6 +9,9 @@ class ModalEditarExercicio extends StatefulWidget {
   final TextEditingController controllerSeries;
   final TextEditingController controllerRepeticoes;
   final Function salvar;
+  final TreinoModel treino;
+  final ExercicioModel exercicioAntigo;
+
 
   const ModalEditarExercicio(
       {super.key,
@@ -15,7 +19,9 @@ class ModalEditarExercicio extends StatefulWidget {
       required this.controllerMusculo,
       required this.controllerSeries,
       required this.controllerRepeticoes,
-      required this.salvar});
+      required this.salvar,
+      required this.treino,
+      required this.exercicioAntigo});
 
   @override
   State<ModalEditarExercicio> createState() => _ModalState();
@@ -70,9 +76,13 @@ class _ModalState extends State<ModalEditarExercicio> {
                 ElevatedButton(
                   onPressed: () {
                     int series = int.parse(widget.controllerSeries.text);
-                    int repeticoes = int.parse(widget.controllerRepeticoes.text);
-                    widget.salvar(ExercicioModel(widget.controllerNome.text,
-                        widget.controllerMusculo.text, series, repeticoes));
+                    int repeticoes =
+                        int.parse(widget.controllerRepeticoes.text);
+                    widget.salvar(
+                        widget.treino,
+                        widget.exercicioAntigo,
+                        ExercicioModel(widget.controllerNome.text,
+                            widget.controllerMusculo.text, series, repeticoes));
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(

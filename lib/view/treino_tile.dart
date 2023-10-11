@@ -51,7 +51,11 @@ class TreinoTile extends StatelessWidget {
                 ),
               ),
             ),
-            ExercicioTile(treino: treino, removerExercicio: removerExercicio, editarExercicio: editarExercicio,),
+            ExercicioTile(
+              treino: treino,
+              removerExercicio: removerExercicio,
+              editarExercicio: editarExercicio,
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(

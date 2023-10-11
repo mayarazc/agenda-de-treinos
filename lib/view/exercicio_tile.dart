@@ -14,8 +14,10 @@ class ExercicioTile extends StatelessWidget {
   final TextEditingController repeticoesController = TextEditingController();
 
   ExercicioTile(
-      {super.key, required this.treino, required this.removerExercicio, required this.editarExercicio}
-  );
+      {super.key,
+      required this.treino,
+      required this.removerExercicio,
+      required this.editarExercicio});
 
   @override
   Widget build(BuildContext context) {
@@ -85,6 +87,11 @@ class ExercicioTile extends StatelessWidget {
                         child: IconButton(
                           icon: const Icon(Icons.edit),
                           onPressed: () {
+                            nomeController.text = treino.exercicios[index].nome;
+                            musculoController.text = treino.exercicios[index].musculo;
+                            seriesController.text = treino.exercicios[index].series.toString();
+                            repeticoesController.text = treino.exercicios[index].repeticoes.toString();
+
                             showDialog(
                               context: context,
                               builder: (BuildContext context) {
@@ -94,6 +101,8 @@ class ExercicioTile extends StatelessWidget {
                                   controllerSeries: seriesController,
                                   controllerRepeticoes: repeticoesController,
                                   salvar: editarExercicio,
+                                  treino: treino,
+                                  exercicioAntigo: treino.exercicios[index],
                                 );
                               },
                             );

@@ -67,10 +67,12 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void editarExercicio(TreinoModel t, ExercicioModel exercicioAntigo, ExercicioModel exercicioNovo) {
+  void editarExercicio(TreinoModel t, ExercicioModel exercicioAntigo,
+      ExercicioModel exercicioNovo) {
     setState(() {
       db.editarExercicio(t, exercicioAntigo, exercicioNovo);
     });
+    Navigator.of(context).pop();
   }
 
   @override
