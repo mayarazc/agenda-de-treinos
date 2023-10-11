@@ -2,14 +2,14 @@ import 'package:agendadetreinos/model/exercicio_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ModalExercicio extends StatefulWidget {
+class ModalEditarExercicio extends StatefulWidget {
   final TextEditingController controllerNome;
   final TextEditingController controllerMusculo;
   final TextEditingController controllerSeries;
   final TextEditingController controllerRepeticoes;
   final Function salvar;
 
-  const ModalExercicio(
+  const ModalEditarExercicio(
       {super.key,
       required this.controllerNome,
       required this.controllerMusculo,
@@ -18,10 +18,10 @@ class ModalExercicio extends StatefulWidget {
       required this.salvar});
 
   @override
-  State<ModalExercicio> createState() => _ModalState();
+  State<ModalEditarExercicio> createState() => _ModalState();
 }
 
-class _ModalState extends State<ModalExercicio> {
+class _ModalState extends State<ModalEditarExercicio> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -42,7 +42,7 @@ class _ModalState extends State<ModalExercicio> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
-                  "CRIAR EXERCÍCIO",
+                  "EDITAR EXERCÍCIO",
                   style: TextStyle(
                     fontFamily: GoogleFonts.inter().fontFamily,
                     fontWeight: FontWeight.bold,
@@ -54,27 +54,15 @@ class _ModalState extends State<ModalExercicio> {
                 ),
                 TextFormField(
                   controller: widget.controllerNome,
-                  decoration: const InputDecoration(
-                    labelText: "Digite o nome do exercício",
-                  ),
                 ),
                 TextFormField(
                   controller: widget.controllerMusculo,
-                  decoration: const InputDecoration(
-                    labelText: "Digite o músculo trabalhado",
-                  ),
                 ),
                 TextFormField(
                   controller: widget.controllerSeries,
-                  decoration: const InputDecoration(
-                    labelText: "Digite o número de séries",
-                  ),
                 ),
                 TextFormField(
                   controller: widget.controllerRepeticoes,
-                  decoration: const InputDecoration(
-                    labelText: "Digite o músculo de repetições",
-                  ),
                 ),
                 const SizedBox(
                   height: 50,
@@ -82,8 +70,7 @@ class _ModalState extends State<ModalExercicio> {
                 ElevatedButton(
                   onPressed: () {
                     int series = int.parse(widget.controllerSeries.text);
-                    int repeticoes =
-                        int.parse(widget.controllerRepeticoes.text);
+                    int repeticoes = int.parse(widget.controllerRepeticoes.text);
                     widget.salvar(ExercicioModel(widget.controllerNome.text,
                         widget.controllerMusculo.text, series, repeticoes));
                   },
@@ -96,7 +83,7 @@ class _ModalState extends State<ModalExercicio> {
                     ),
                   ),
                   child: const Text(
-                    "Criar",
+                    "Salvar",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 16,

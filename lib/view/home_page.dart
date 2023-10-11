@@ -3,7 +3,7 @@
 import 'package:agendadetreinos/model/exercicio_model.dart';
 import 'package:agendadetreinos/model/treino_model.dart';
 import 'package:agendadetreinos/view/treino_tile.dart';
-import 'package:agendadetreinos/view/modal.dart';
+import 'package:agendadetreinos/view/modal_treino.dart';
 import 'package:agendadetreinos/dados/treinos_db.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -24,10 +24,8 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     if (_treinos.get('treinos') == null) {
       db.criarBanco();
-      print("/n/n/nAQUI passou 1");
     } else {
       db.carregarDados();
-      print("/n/n/nAQUI passou 3");
     }
   }
 
@@ -69,6 +67,12 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void editarExercicio(TreinoModel t, ExercicioModel exercicioAntigo, ExercicioModel exercicioNovo) {
+    setState(() {
+      db.editarExercicio(t, exercicioAntigo, exercicioNovo);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -95,6 +99,7 @@ class _HomePageState extends State<HomePage> {
             repeticoesController: repeticoesController,
             salvarExercicio: (context) => adicionarExercicio(db.treinos[index]),
             removerExercicio: removerExercicio,
+            editarExercicio: editarExercicio,
           );
         },
       ),
@@ -103,7 +108,7 @@ class _HomePageState extends State<HomePage> {
           showModalBottomSheet(
             context: context,
             builder: (BuildContext context) {
-              return Modal(
+              return ModalTreino(
                 controller: controller,
                 salvar: (nomeTreino) {
                   salvarTreino(controller.text);

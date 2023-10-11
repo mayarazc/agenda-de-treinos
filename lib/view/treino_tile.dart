@@ -9,9 +9,9 @@ import 'package:flutter/material.dart';
 // ignore: must_be_immutable
 class TreinoTile extends StatelessWidget {
   final TreinoModel treino;
-  //final List<ExercicioModel> lexercicios;
   final Function salvarExercicio;
   final Function removerExercicio;
+  final Function editarExercicio;
   final TextEditingController nomeExercicioController;
   final TextEditingController musculoController;
   final TextEditingController seriesController;
@@ -20,9 +20,9 @@ class TreinoTile extends StatelessWidget {
   const TreinoTile(
       {super.key,
       required this.treino,
-      //required this.lexercicios,
       required this.salvarExercicio,
       required this.removerExercicio,
+      required this.editarExercicio,
       required this.musculoController,
       required this.nomeExercicioController,
       required this.repeticoesController,
@@ -51,7 +51,7 @@ class TreinoTile extends StatelessWidget {
                 ),
               ),
             ),
-            ExercicioTile(treino: treino, removerExercicio: removerExercicio),
+            ExercicioTile(treino: treino, removerExercicio: removerExercicio, editarExercicio: editarExercicio,),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(

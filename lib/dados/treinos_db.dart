@@ -15,7 +15,6 @@ class TreinosDB {
 
   void carregarDados() {
     treinos = _treinos.get('treinos');
-    print("/n/n/nAQUI passou 2");
   }
 
   void adicionarTreino(TreinoModel treino) {
@@ -37,5 +36,17 @@ class TreinosDB {
     int idx = treinos.indexOf(t);
     treinos[idx].exercicios.remove(exercicio);
     atualizarTreinos();
+  }
+
+  void editarExercicio(TreinoModel t, ExercicioModel exercicioAntigo,ExercicioModel exercicioNovo) {
+    int indiceTreino = treinos.indexOf(t);
+
+    if (indiceTreino != -1) {
+      int indiceExercicio = treinos[indiceTreino].exercicios.indexOf(exercicioAntigo);
+      if (indiceExercicio != -1) {
+        treinos[indiceTreino].exercicios[indiceExercicio] = exercicioNovo;
+        atualizarTreinos();
+      }
+    }
   }
 }

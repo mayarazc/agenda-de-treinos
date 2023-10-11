@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class Modal extends StatefulWidget {
+class ModalTreino extends StatefulWidget {
   final TextEditingController controller;
   final Function(String) salvar;
-  const Modal({super.key, required this.controller, required this.salvar});
+  const ModalTreino({super.key, required this.controller, required this.salvar});
 
   @override
-  State<Modal> createState() => _ModalState();
+  State<ModalTreino> createState() => _ModalState();
 }
 
-class _ModalState extends State<Modal> {
+class _ModalState extends State<ModalTreino> {
 
   @override
   Widget build(BuildContext context) {

@@ -1,12 +1,21 @@
 // ignore: unused_import
 import 'package:agendadetreinos/model/exercicio_model.dart';
 import 'package:agendadetreinos/model/treino_model.dart';
+import 'package:agendadetreinos/view/modal_editar_exercicio.dart';
 import 'package:flutter/material.dart';
 
 class ExercicioTile extends StatelessWidget {
   final TreinoModel treino;
   final Function removerExercicio;
-  const ExercicioTile({super.key, required this.treino, required this.removerExercicio});
+  final Function editarExercicio;
+  final TextEditingController nomeController = TextEditingController();
+  final TextEditingController musculoController = TextEditingController();
+  final TextEditingController seriesController = TextEditingController();
+  final TextEditingController repeticoesController = TextEditingController();
+
+  ExercicioTile(
+      {super.key, required this.treino, required this.removerExercicio, required this.editarExercicio}
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +85,18 @@ class ExercicioTile extends StatelessWidget {
                         child: IconButton(
                           icon: const Icon(Icons.edit),
                           onPressed: () {
-                            print("ola");
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return ModalEditarExercicio(
+                                  controllerNome: nomeController,
+                                  controllerMusculo: musculoController,
+                                  controllerSeries: seriesController,
+                                  controllerRepeticoes: repeticoesController,
+                                  salvar: editarExercicio,
+                                );
+                              },
+                            );
                           },
                           iconSize: 15,
                         ),
